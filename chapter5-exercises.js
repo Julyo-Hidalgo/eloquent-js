@@ -46,3 +46,24 @@ function every2(array, test){
 function every3(array, test){
 	return !array.some(elt => !test(elt));
 }
+
+//dominant writing direction
+function dominantDirection(text) {
+    scripts = countBy(text, ch => {
+        script = characterScript(ch.codePointAt(0));
+        return script ? script.direction : "none";
+    }); 
+    
+    scripts = scripts.filter(x => x.name != "none");
+
+	if (scripts.length == 0) return "ltr";
+
+    dominant = 0;
+    for (let counter = 1; counter < scripts.length; counter++){
+        if(scripts[counter - 1].count < scripts[counter].count){
+            dominant = counter;
+        }
+    }
+
+    return scripts[dominant].name;
+}
