@@ -51,3 +51,26 @@ class Group{
 		return group;
 	}
 }
+
+//iterable groups
+class GroupIterator{
+	constructor(group){
+		this.group = group;
+		this.position = 0;
+	}
+
+	next(){
+		if (this.group.elements.length == 0) return { done: true };
+
+		if (this.position >= 0 && this.position < this.group.elements.length){
+			return { done: false, value: this.group.elements[this.position++] };
+		}else{
+			return { done: true };
+		}
+
+	}
+}
+
+Group.prototype[Symbol.iterator] = function() {
+	return new GroupIterator(this);
+};
